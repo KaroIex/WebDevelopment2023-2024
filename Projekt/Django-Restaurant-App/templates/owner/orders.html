@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>Lista zamówień</h1>
+      <div class="container">
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>ID zamówienia</th>
+      <th>Data</th>
+      <th>Status</th>
+      <th>Akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in object_list %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.date }}</td>
+      <td>{{ order.status }}</td>
+      <td>
+        <form action="{% url 'update_status' order.id %}" method="post">
+          {% csrf_token %}
+            <div class="form-group">
+                <label>
+                    <select class="form-control" name="status">
+                      <option value="nowe">Nowe</option>
+                      <option value="w trakcie">W trakcie</option>
+                      <option value="gotowe">Gotowe</option>
+                      <option value="wysłane">Wysłane</option>
+                    </select>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Zaktualizuj status</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+      </div >
+{% endblock %}

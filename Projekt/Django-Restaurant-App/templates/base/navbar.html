@@ -1,0 +1,72 @@
+{% if user.is_authenticated %}
+    {% if user.user.role == "user" %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">{{ user.username }}</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'restaurant' %}">Restauracje</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'cart' %}">Mój koszyk</a>
+                </li>
+            </ul>
+             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'order_history' %}">Moje zamówienia</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj się</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    {% if user.user.role == "owner" %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">{{ user.username }}</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'edit_restaurant' %}">Edytuj dane restauracji</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'Order' %}">Zamówienia</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'manage_products' %}">Zarządzaj poduktami</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj się</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endif %}

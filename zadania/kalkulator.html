@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <style>
+        #main {
+            display: inline-block;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .row button {
+            width: 50px;
+            height: 50px;
+            margin-right: 5px;
+            font-size: 18px;
+        }
+        .row button:last-child {
+            margin-right: 0;
+        }
+        #display {
+            width: calc(55px * 4 - 5px);
+            height: 50px;
+            margin-bottom: 10px;
+            background-color: #ebebeb;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+        #history {
+            margin-top: 10px;
+            height: 100px;
+            overflow-y: scroll;
+            background-color: #e0e0e0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body onload="gen()">
+<div id="main">
+    <div id="display"></div>
+</div>
+<div id="history"></div>
+
+<script>
+    function gen() {
+        const main = document.getElementById("main")
+
+        // Funkcje obsługujące przyciski
+        function addToDisplay() {
+            document.getElementById("display").innerText += this.dataset.value;
+        }
+
+        function calculate() {
+            try {
+                const result = eval(document.getElementById("display").innerText);
+                document.getElementById("history").innerText += `${document.getElementById("display").innerText} = ${result}\n`;
+                document.getElementById("display").innerText = result;
+            } catch (error) {
+                document.getElementById("display").innerText = "Error";
+            }
+        }
+
+        function removeFromDisplay() {
+            document.getElementById("display").innerText = document.getElementById("display").innerText.slice(0, -1);
+        }
+
+        function clearDisplay() {
+            document.getElementById("display").innerText = "";
+        }
+
+        const buttons = [
+            ['CE', 'C', '', ''], ['7', '8', '9', '/'],
+            ['4', '5', '6', '*'], ['1', '2', '3', '-'],
+            ['0', '.', '=', '+']
+        ];
+
+        buttons.forEach(row => {
+            const rowDiv = document.createElement("div");
+            rowDiv.className = "row";
+            row.forEach(char => {
+                const key = document.createElement("button");
+                key.innerText = char;
+                if (char) key.dataset.value = char;
+                if (char === "=") key.onclick = calculate;
+                else if (char === 'C') key.onclick = removeFromDisplay;
+                else if (char === 'CE') key.onclick = clearDisplay;
+                else if (char) key.onclick = addToDisplay;
+                rowDiv.appendChild(key);
+            });
+            main.appendChild(rowDiv);
+        });
+    }
+</script>
+</body>
+</html>

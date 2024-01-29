@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Zarządzaj produktami restauracji {{ restaurant.name }}</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nazwa produktu</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Opcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <a href="{% url 'edit_product' product.id %}" class="btn btn-primary">edytuj</a>
+                        <a href="{% url 'delete_product' product.id %}" class="btn btn-danger">Usuń</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <a href="{% url 'add_product' %} " class="btn btn-primary">dodaj nowy produkt</a>
+    </div>
+{% endblock %}

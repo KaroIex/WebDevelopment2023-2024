@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="text-center my-5">Historia zamówień</h1>
+    {% for order in object_list %}
+      <div class="card mb-3">
+        <div class="card-header">
+          Zamówienie {{ order.id }}
+        </div>
+        <div class="card-body">
+          <p class="card-text">Data: {{ order.date }}</p>
+          <p class="card-text">Restauracja: {{ order.restaurant.name }}</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Produkt</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Suma</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in order.orderitem_set.all %}
+                <tr>
+                  <td>{{ item.product.name }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.product.price }} zł</td>
+                  <td>{{ item.total_price }} zł</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p class="card-text">Suma: {{ order.total_price }} zł</p>
+          <p class="card-text">{{ order.status }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

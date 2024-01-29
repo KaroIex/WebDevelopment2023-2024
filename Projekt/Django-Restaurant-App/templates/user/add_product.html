@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Dodaj produkt do oferty restauracji {{ restaurant.name }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="form-control" id="name">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" name="quantity" class="form-control" id="quantity">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" step="any" name="price" class="form-control" id="price">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Save</button>
+    </form>
+    {% if saved %}
+      <div class="alert alert-success my-3">Produkt został dodany do oferty restauracji {{ restaurant.name }}</div>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block content %}
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Restauracje:</h2>
+    <div class="row justify-content-center">
+      {% for restaurant in restaurants %}
+        <div class="col-md-4 col-sm-6 mb-3">
+          <div class="card">
+            <img src="{{ restaurant.photo_url }}" alt="{{ restaurant.name }} photo" class="card-img-top" style="height: 200px; object-fit: contain;">
+            <div class="card-body">
+              <h5 class="card-title">{{ restaurant.name }}</h5>
+              <p class="card-text">{{ restaurant.location }}</p>
+              <p class="card-text">nr telefonu: {{ restaurant.phone_number }}</p>
+              <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-primary">oferta</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

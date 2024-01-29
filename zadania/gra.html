@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gra z przeszkodami</title>
+    <style>
+        #gameCanvas {
+            background-color: #f0f0f0;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas id="gameCanvas" width="640" height="480"></canvas>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let hero = { x: canvas.width/2, y: canvas.height-40, width: 30, height: 30, speed: 5 };
+    let obstacles = [ { x: 100, y: 100, width: 50, height: 50 }, { x: 300, y: 200, width: 60, height: 60 } ];
+
+    function drawHero() {
+        ctx.fillStyle = 'red';
+        ctx.fillRect(hero.x, hero.y, hero.width, hero.height);
+    }
+
+    function drawObstacles() {
+        obstacles.forEach(obstacle => {
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+        });
+    }
+
+    function checkCollisions() {
+        obstacles.forEach(obstacle => {
+            if(hero.x < obstacle.x + obstacle.width &&
+                hero.x + hero.width > obstacle.x &&
+                hero.y < obstacle.y + obstacle.height &&
+                hero.y + hero.height > obstacle.y) {
+                // Prosta obsługa kolizji - reset gry
+                hero.x = canvas.width/2;
+                hero.y = canvas.height-40;
+            }
+        });
+    }
+
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function animate() {
+        clearCanvas();
+        drawHero();
+        drawObstacles();
+        checkCollisions();
+        requestAnimationFrame(animate);
+    }
+
+    // Obsługa sterowania
+    function keyboardInput(event) {
+        const key = event.key;
+        switch(key) {
+            case 'ArrowUp':
+                hero.y -= hero.speed;
+                break;
+            case 'ArrowDown':
+                hero.y += hero.speed;
+                break;
+            case 'ArrowLeft':
+                hero.x -= hero.speed;
+                break;
+            case 'ArrowRight':
+                hero.x += hero.speed;
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', keyboardInput);
+    animate();
+</script>
+</body>
+</html>

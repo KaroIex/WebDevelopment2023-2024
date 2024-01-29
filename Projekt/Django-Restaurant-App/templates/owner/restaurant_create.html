@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Create a new restaurant</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
